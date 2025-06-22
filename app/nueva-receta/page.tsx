@@ -57,7 +57,7 @@ export default function NewRecipePage() {
         const firebaseRecipe = convertLocalToFirebase(newRecipe)
         await addRecipe(firebaseRecipe)
         console.log("✅ Receta guardada en Firebase correctamente!")
-        alert("¡Receta guardada en Firebase correctamente!")
+        alert("¡Receta guardada en Firebase correctamente! 👨🏻‍🍳👩🏻‍🍳")
         router.push("/")
       } else {
         throw new Error("Firebase not available")

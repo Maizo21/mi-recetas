@@ -141,7 +141,7 @@ export default function HomePage() {
         <div className="text-center mb-6 sm:mb-8">
           <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
             <ChefHat className="h-6 w-6 sm:h-8 sm:w-8 text-orange-600" />
-            <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">LIbro de Recetas</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">Libro de Recetas</h1>
           </div>
           <p className="text-gray-600 text-sm sm:text-lg px-4">Organiza tus recetas favoritas y descubre qué cocinar</p>
           <div className="flex items-center justify-center gap-2 mt-2">

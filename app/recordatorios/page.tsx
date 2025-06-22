@@ -69,7 +69,7 @@ export default function RemindersPage() {
       })
 
       console.log("✅ Recordatorio guardado en Firebase!")
-      alert("¡Recordatorio configurado correctamente en Firebase!")
+      alert("¡Recordatorio configurado correctamente en Firebase! ⏰")
       setFormData({ Nombre: "", correo: "", Periodicidad: "" })
       loadData()
     } catch (error) {
@@ -105,10 +105,7 @@ export default function RemindersPage() {
   const getFrequencyText = (frequency: string) => {
     const frequencies: { [key: string]: string } = {
       diaria: "Diaria",
-      semanal: "Semanal",
-      bisemanal: "Bisemanal (cada 2 semanas)",
-      mensual: "Mensual",
-      bimensual: "Bimensual (cada 2 meses)",
+      semanal: "Semanal"
     }
     return frequencies[frequency] || frequency
   }
@@ -116,10 +113,7 @@ export default function RemindersPage() {
   const getFrequencyEmoji = (frequency: string) => {
     const emojis: { [key: string]: string } = {
       diaria: "📅",
-      semanal: "📆",
-      bisemanal: "🗓️",
-      mensual: "📋",
-      bimensual: "📊",
+      semanal: "📆"
     }
     return emojis[frequency] || "⏰"
   }
@@ -183,7 +177,7 @@ export default function RemindersPage() {
                 Nuevo Recordatorio
               </CardTitle>
               <CardDescription className="text-sm">
-                Configura recordatorios para motivarte a registrar nuevas recetas
+                Configura recordatorios, que no se nos olvide ninguna receta rica
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -325,8 +319,7 @@ export default function RemindersPage() {
                   ¿Cómo funcionan los recordatorios?
                 </h3>
                 <p className="text-blue-700 text-xs sm:text-sm leading-relaxed">
-                  Te enviaremos emails motivacionales según la frecuencia que elijas para recordarte que registres esas
-                  comidas deliciosas y diferentes que preparas. ¡Nunca más olvides una receta especial!
+                  Te llegará un correo pidiendote registrar alguna comida, esto alimentará la base de datos y te dara mas combinaciones de ingredientes.
                 </p>
               </div>
             </div>
