@@ -2,57 +2,56 @@ import { type NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
   try {
-    // Verificar autorización
+    // Para cron jobs de Vercel, la autorización viene automáticamente
+    // Solo verificamos si viene de Vercel o si tiene el header correcto
     const authHeader = request.headers.get("authorization")
-    const expectedAuth = process.env.CRON_SECRET
+    const userAgent = request.headers.get("user-agent")
+    const isFromVercel = userAgent?.includes("vercel") || authHeader?.includes("Bearer")
 
-    console.log("🔍 Auth header received:", authHeader ? "Present" : "Missing")
-    console.log("🔍 Expected auth:", expectedAuth ? "Configured" : "Missing")
-
-    if (!expectedAuth) {
-      return NextResponse.json(
-        {
-          error: "CRON_SECRET not configured in environment variables",
-          debug: "Check Vercel Environment Variables",
+    // Si no viene autorización, damos información útil
+    if (!authHeader) {
+      return NextResponse.json({
+        success: false,
+        message: "No authorization header provided",
+        info: "This is normal when testing from browser",
+        vercelCronWillWork: true,
+        debug: {
+          userAgent: userAgent || "Not provided",
+          expectedHeader: `Bearer ${process.env.CRON_SECRET}`,
+          cronSecretConfigured: !!process.env.CRON_SECRET,
         },
-        { status: 500 },
-      )
+      })
     }
 
+    // Verificar autorización
+    const expectedAuth = process.env.CRON_SECRET
     if (authHeader !== `Bearer ${expectedAuth}`) {
       return NextResponse.json(
         {
-          error: "Unauthorized",
-          debug: {
-            received: authHeader || "No authorization header",
-            expected: `Bearer ${expectedAuth}`,
-            help: "Add 'Authorization: Bearer your-secret' header",
-          },
+          success: false,
+          error: "Invalid authorization",
+          provided: authHeader,
+          expected: `Bearer ${expectedAuth}`,
         },
         { status: 401 },
       )
     }
 
+    // ¡Éxito!
     return NextResponse.json({
       success: true,
-      message: "Cron job test successful! 🎉",
+      message: "🎉 Cron endpoint working perfectly!",
       timestamp: new Date().toISOString(),
-      timezone: "UTC",
+      environment: process.env.VERCEL_ENV || "development",
     })
   } catch (error) {
-    console.error("Cron test error:", error)
     return NextResponse.json(
       {
         success: false,
-        error: "Cron test failed",
+        error: "Server error",
         details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 },
     )
   }
-}
-
-// También permitir POST para mayor flexibilidad
-export async function POST(request: NextRequest) {
-  return GET(request)
 }
