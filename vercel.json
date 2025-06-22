@@ -1,12 +1,12 @@
 {
   "crons": [
     {
-      "path": "/api/send-bulk-reminders?frequency=diaria",
-      "schedule": "0 20 * * *"
-    },
-    {
       "path": "/api/send-bulk-reminders?frequency=semanal",
       "schedule": "0 20 * * 1"
+    },
+    {
+      "path": "/api/send-bulk-reminders?frequency=mensual",
+      "schedule": "0 20 1 * *"
     }
   ]
 }
